@@ -86,6 +86,9 @@
 /* Operating system.  */
 #define PRINT_OPERATING_SYSTEM 128
 
+/* fake hardcoded cpu architecture */
+const char* CPU_ARCH = "i686";
+
 static struct option const uname_long_options[] =
 {
   {"all", no_argument, NULL, 'a'},
@@ -296,12 +299,12 @@ main (int argc, char **argv)
       if (toprint & PRINT_KERNEL_VERSION)
         print_element (name.version);
       if (toprint & PRINT_MACHINE)
-        print_element (name.machine);
+        print_element (CPU_ARCH);
     }
 
   if (toprint & PRINT_PROCESSOR)
     {
-      char const *element = unknown;
+      char const *element = CPU_ARCH;
 #if HAVE_SYSINFO && defined SI_ARCHITECTURE
       {
         static char processor[257];
@@ -365,7 +368,7 @@ main (int argc, char **argv)
         }
 #endif
       if (! (toprint == UINT_MAX && element == unknown))
-        print_element (element);
+        print_element (CPU_ARCH);
     }
 
   if (toprint & PRINT_OPERATING_SYSTEM)
